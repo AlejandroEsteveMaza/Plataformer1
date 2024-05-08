@@ -5,26 +5,18 @@ import inputs.MouseInputs;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.Random;
 
 public class GamePanel extends JPanel {
 
     private float xDelta = 100, yDelta = 100;
     private float xDir = 1f, yDir = 1f;
-
     private Color color;
-
-    private Random random;
-
-
-
-    private MouseInputs mouseInputs;
+    private final Random random;
 
     public GamePanel() {
         random = new Random();
-        mouseInputs = new MouseInputs(this);
+        MouseInputs mouseInputs = new MouseInputs(this);
         addKeyListener(new KeyboardInputs(this));
         addMouseListener(mouseInputs);
         addMouseMotionListener(mouseInputs);
@@ -34,7 +26,7 @@ public class GamePanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        updateRectangle();
+
 
         g.setColor(color);
         g.fillRect((int) xDelta, (int)yDelta, 50, 50);
@@ -42,6 +34,10 @@ public class GamePanel extends JPanel {
 
     private Color getRndColor() {
         return new Color(random.nextInt(255),random.nextInt(255),random.nextInt(255));
+    }
+
+    public void updateGameLogic() {
+        updateRectangle();
     }
 
     private void updateRectangle() {
@@ -66,10 +62,5 @@ public class GamePanel extends JPanel {
     public void changeYDelta(int value) {
         this.yDelta += value;
 
-    }
-
-    public void setRectPos(int x, int y) {
-        this.xDelta = x;
-        this.yDelta = y;
     }
 }
